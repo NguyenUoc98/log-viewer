@@ -1,5 +1,5 @@
 {
-    "name": "opcodesio/log-viewer",
+    "name": "uocnv/log-viewer",
     "private": true,
     "scripts": {
         "dev": "mix",

@@ -44,23 +44,32 @@ class LogViewerService
         }
         $files = [];
 
-        foreach (config('log-viewer.include_files', []) as $pattern) {
-            if (! str_starts_with($pattern, DIRECTORY_SEPARATOR)) {
-                $pattern = $baseDir.$pattern;
+        $folders = array_filter(scandir($baseDir), function($item){
+            return $item != '..';
+        });
+        foreach ($folders as $folder) {
+            if (is_dir($baseDir.$folder)) {
+                if ($folder == '.') {
+                    $folder = '';
+                }
+                foreach (config('log-viewer.include_files', []) as $pattern) {
+                    if (! str_starts_with($pattern, DIRECTORY_SEPARATOR)) {
+                        $pattern = $baseDir.$folder.'/'.$pattern;
+                    }
+                    $files = array_merge($files, $this->getFilePathsMatchingPattern($pattern));
+                }
+                foreach (config('log-viewer.exclude_files', []) as $pattern) {
+                    if (! str_starts_with($pattern, DIRECTORY_SEPARATOR)) {
+                        $pattern = $baseDir.$folder.'/'.$pattern;
+                    }
+
+                    $files = array_diff($files, $this->getFilePathsMatchingPattern($pattern));
+                }
             }
-
-            $files = array_merge($files, $this->getFilePathsMatchingPattern($pattern));
-        }
-
-        foreach (config('log-viewer.exclude_files', []) as $pattern) {
-            if (! str_starts_with($pattern, DIRECTORY_SEPARATOR)) {
-                $pattern = $baseDir.$pattern;
-            }
-
-            $files = array_diff($files, $this->getFilePathsMatchingPattern($pattern));
         }
 
         $files = array_map('realpath', $files);
+
 
         $files = array_filter($files, 'is_file');
 
@@ -208,6 +217,6 @@ class LogViewerService
             return 'unit-tests';
         }
 
-        return InstalledVersions::getPrettyVersion('opcodesio/log-viewer') ?? 'dev-main';
+        return InstalledVersions::getPrettyVersion('uocnv/log-viewer') ?? 'dev-main';
     }
 }

@@ -45,7 +45,7 @@ class FileList extends Component
             ->when(
                 $this->direction === self::OLDEST_FIRST,
                 fn (LogFolderCollection $folders) => $folders->sortByEarliestFirstIncludingFiles()
-            );
+            )->reverse();
 
         return view('log-viewer::livewire.file-list', [
             'folderCollection' => $folderCollection,

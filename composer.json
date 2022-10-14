@@ -1,5 +1,5 @@
 {
-    "name": "opcodesio/log-viewer",
+    "name": "uocnv/log-viewer",
     "version": "v1.6.1",
     "description": "Fast and easy-to-use log viewer for your Laravel application",
     "keywords": [
@@ -10,12 +10,12 @@
         "log viewer",
         "better-log-viewer"
     ],
-    "homepage": "https://github.com/opcodesio/log-viewer",
+    "homepage": "https://github.com/NguyenUoc98/log-viewer",
     "license": "MIT",
     "authors": [
         {
-            "name": "Arunas Skirius",
-            "email": "arukomp@gmail.com",
+            "name": "Nguyễn Văn Ước",
+            "email": "uocnv.soict.hust@gmail.com",
             "role": "Developer"
         }
     ],
